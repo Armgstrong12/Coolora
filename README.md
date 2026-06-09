@@ -1,12 +1,8 @@
-# Coolora
+# COOLORA
 
-Site e-commerce statique premium pour Coolora, conçu en HTML, CSS et JavaScript vanilla.
+Boutique e-commerce statique premium de COOLORA, construite en HTML, CSS et JavaScript vanilla et déployable directement sur GitHub Pages.
 
-## Ouvrir le site
-
-Ouvrez `index.html` directement dans votre navigateur.
-
-Pour un aperçu avec serveur local, vous pouvez aussi lancer :
+## Lancer le site en local
 
 ```bash
 python -m http.server 4173
@@ -14,47 +10,34 @@ python -m http.server 4173
 
 Puis ouvrir `http://localhost:4173`.
 
-## Remplacer les images
+## Pages principales
 
-Les images sont dans `assets/images`.
+- `index.html` : accueil et présentation de la marque.
+- `boutique.html` : catalogue des deux modèles COOLORA.
+- `a-propos.html` : histoire, vision et engagements de la marque.
+- `product-air-luxe.html` et `product-pro-360.html` : fiches produit.
+- `panier.html` : panier persistant dans le navigateur avec `localStorage`.
+- `checkout.html` : informations de commande et récapitulatif, sans paiement actif.
+- `faq.html`, `contact.html` et les pages légales : informations client et réglementaires.
+- `404.html`, `robots.txt` et `sitemap.xml` : gestion des erreurs et référencement.
 
-Gardez les mêmes noms de fichiers si vous voulez remplacer une image sans modifier le code :
+## Images
 
-- `hero-mediterranean.webp` : fond hero avec mer et voile.
-- `mediterranean-arch.webp` : ambiance méditerranéenne.
-- `product-air-luxe-cutout.webp` : Coolora Air Luxe.
-- `product-pro-360-cutout.webp` : Coolora Pro 360.
-- `lifestyle-beach.webp`, `lifestyle-city.webp`, `lifestyle-home.webp` : cartes usages et avis.
-- `coolora-logo-symbol-cutout.webp` : symbole du logo.
+Les images se trouvent dans `assets/images` :
 
-## Modifier les textes et prix
+- `hero-mediterranean.webp` : visuel principal.
+- `mediterranean-arch.webp` : univers de marque.
+- `product-air-luxe-cutout.webp` : COOLORA Air Luxe.
+- `product-pro-360-cutout.webp` : COOLORA Pro 360.
+- `lifestyle-beach.webp`, `lifestyle-city.webp`, `lifestyle-home.webp` : usages.
+- `coolora-logo-symbol-cutout.webp` et `favicon.svg` : identité visuelle.
 
-Tout le contenu visible est dans `index.html`.
+## Panier et commande
 
-Les prix se trouvent dans la section `Nos produits` :
+Le panier fonctionne sans backend grâce à `localStorage`. Il conserve le modèle, la couleur, la quantité et le total pendant la navigation.
 
-- Coolora Air Luxe : `80 €`
-- Coolora Pro 360 : `149 €`
+Le paiement reste volontairement désactivé. Son intégration devra être réalisée avec un prestataire sécurisé avant l’ouverture des commandes payantes.
 
-## Déployer
+## Déploiement GitHub Pages
 
-### Netlify
-
-1. Créez un nouveau site depuis le dossier du projet.
-2. Aucun build command n’est nécessaire.
-3. Le dossier de publication est la racine du projet.
-
-### Vercel
-
-1. Importez le projet.
-2. Choisissez un projet statique.
-3. Laissez la commande de build vide.
-4. Le dossier de sortie est la racine du projet.
-
-## Connecter une commande plus tard
-
-Les boutons `Commander maintenant` et `Découvrir` pointent aujourd’hui vers des sections internes.
-
-Pour connecter Stripe, PayPal, Tally ou Formspree plus tard, remplacez les liens `href` des boutons dans `index.html` par votre lien sécurisé.
-
-Pour un lien externe, gardez `target="_blank"` et `rel="noopener noreferrer"`.
+Aucune commande de build n’est nécessaire. Le site peut être publié directement depuis la racine du dépôt. Le domaine personnalisé est défini dans `CNAME`.
