@@ -41,17 +41,3 @@ Le paiement reste volontairement désactivé. Son intégration devra être réal
 ## Déploiement GitHub Pages
 
 Aucune commande de build n’est nécessaire. Le site peut être publié directement depuis la racine du dépôt. Le domaine personnalisé est défini dans `CNAME`.
-Pour un lien externe, gardez `target="_blank"` et `rel="noopener noreferrer"`.
-
-## Structure de la boutique
-
-Le site reste entièrement statique et compatible avec GitHub Pages : aucune commande de build n’est nécessaire.
-
-- `product-air-luxe.html` et `product-pro-360.html` : fiches produit.
-- `panier.html` : panier local enregistré dans le navigateur avec `localStorage`.
-- `checkout.html` : aperçu du checkout, sans paiement actif.
-- `faq.html` : questions fréquentes complètes.
-- `contact.html` et les pages légales : structure prête à compléter avec les informations officielles.
-- `404.html`, `robots.txt` et `sitemap.xml` : navigation d’erreur et référencement.
-
-Le bouton de paiement reste volontairement non fonctionnel tant qu’un prestataire comme Stripe ou PayPal n’est pas configuré. Les données du panier restent uniquement dans le navigateur de la personne qui visite le site.
