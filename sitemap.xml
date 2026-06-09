@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://coolora-paris.fr/</loc></url>
-  <url><loc>https://coolora-paris.fr/product-air-luxe.html</loc></url>
-  <url><loc>https://coolora-paris.fr/product-pro-360.html</loc></url>
+  <url><loc>https://coolora-paris.fr/boutique.html</loc></url>
+  <url><loc>https://coolora-paris.fr/a-propos.html</loc></url>
+  <url><loc>https://coolora-paris.fr/faq.html</loc></url>
+  <url><loc>https://coolora-paris.fr/contact.html</loc></url>
   <url><loc>https://coolora-paris.fr/panier.html</loc></url>
   <url><loc>https://coolora-paris.fr/checkout.html</loc></url>
-  <url><loc>https://coolora-paris.fr/faq.html</loc></url>
+  <url><loc>https://coolora-paris.fr/product-air-luxe.html</loc></url>
+  <url><loc>https://coolora-paris.fr/product-pro-360.html</loc></url>
+  <url><loc>https://coolora-paris.fr/livraison-retours.html</loc></url>
   <url><loc>https://coolora-paris.fr/mentions-legales.html</loc></url>
   <url><loc>https://coolora-paris.fr/cgv.html</loc></url>
   <url><loc>https://coolora-paris.fr/politique-confidentialite.html</loc></url>
-  <url><loc>https://coolora-paris.fr/livraison-retours.html</loc></url>
   <url><loc>https://coolora-paris.fr/politique-remboursement.html</loc></url>
   <url><loc>https://coolora-paris.fr/droit-retractation.html</loc></url>
-  <url><loc>https://coolora-paris.fr/contact.html</loc></url>
 </urlset>

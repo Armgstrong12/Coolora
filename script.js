@@ -4,11 +4,34 @@ const nav = document.querySelector("[data-nav]");
 const revealItems = document.querySelectorAll(".reveal");
 const faqButtons = document.querySelectorAll(".faq-question");
 const CART_KEY = "coolora-cart-v1";
+const PRODUCT_CATALOG = {
+  "air-luxe": {
+    name: "COOLORA Air Luxe",
+    price: 80,
+    image: "assets/images/product-air-luxe-cutout.webp",
+  },
+  "pro-360": {
+    name: "COOLORA Pro 360",
+    price: 149,
+    image: "assets/images/product-pro-360-cutout.webp",
+  },
+};
+const PRODUCT_COLORS = ["Blanc", "Bleu foncé", "Noir"];
 
 const readCart = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
-    return Array.isArray(saved) ? saved : [];
+    if (!Array.isArray(saved)) return [];
+    return saved.flatMap((item) => {
+      const product = PRODUCT_CATALOG[item?.id];
+      if (!product) return [];
+      return [{
+        id: item.id,
+        ...product,
+        color: PRODUCT_COLORS.includes(item.color) ? item.color : "Blanc",
+        quantity: Math.max(1, Math.min(10, Number(item.quantity) || 1)),
+      }];
+    });
   } catch {
     return [];
   }
@@ -34,12 +57,12 @@ const addProductToCart = (form, redirect = false) => {
   const color = form.querySelector('input[name="color"]:checked')?.value || "Blanc";
   const quantityInput = form.querySelector("[data-product-quantity]");
   const quantity = Math.max(1, Math.min(10, Number(quantityInput?.value) || 1));
+  const productData = PRODUCT_CATALOG[form.dataset.productId];
+  if (!productData) return;
   const product = {
     id: form.dataset.productId,
-    name: form.dataset.productName,
-    price: Number(form.dataset.productPrice),
-    image: form.dataset.productImage,
-    color,
+    ...productData,
+    color: PRODUCT_COLORS.includes(color) ? color : "Blanc",
     quantity,
   };
   const cart = readCart();
@@ -140,12 +163,6 @@ document.addEventListener("click", (event) => {
   const disabledSocial = event.target.closest(".social-links .is-disabled");
   if (disabledSocial) event.preventDefault();
 });
-
-document.querySelectorAll("[data-placeholder-form]").forEach((form) => form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const status = form.querySelector("[data-form-status]");
-  if (status) status.textContent = form.dataset.formMessage || "Ce formulaire n’est pas encore connecté.";
-}));
 
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
