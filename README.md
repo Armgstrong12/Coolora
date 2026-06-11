@@ -10,33 +10,37 @@ python -m http.server 4173
 
 Puis ouvrir `http://localhost:4173`.
 
+## Parcours de commande
+
+Le site utilise des **Stripe Payment Links** externes, sans clé API ni donnée bancaire dans le dépôt :
+
+1. accueil (`index.html`) ;
+2. catalogue (`boutique.html`) ;
+3. fiche produit ;
+4. page de paiement Stripe ;
+5. confirmation (`merci.html`).
+
+Avant la mise en ligne, remplacer les deux valeurs suivantes dans les pages concernées par les Payment Links créés dans Stripe :
+
+- `STRIPE_LINK_AIR_LUXE` ;
+- `STRIPE_LINK_PRO_360`.
+
+Configurer ensuite l’URL de redirection après paiement vers `https://coolora-paris.fr/merci.html` dans Stripe.
+
 ## Pages principales
 
 - `index.html` : accueil et présentation de la marque.
-- `boutique.html` : catalogue des deux modèles COOLORA.
-- `a-propos.html` : histoire, vision et engagements de la marque.
-- `product-air-luxe.html` et `product-pro-360.html` : fiches produit.
-- `panier.html` : panier persistant dans le navigateur avec `localStorage`.
-- `checkout.html` : informations de commande et récapitulatif, sans paiement actif.
-- `faq.html`, `contact.html` et les pages légales : informations client et réglementaires.
+- `boutique.html` : catalogue et comparaison des deux modèles.
+- `product-air-luxe.html` et `product-pro-360.html` : fiches produit et accès direct au paiement.
+- `a-propos.html`, `faq.html`, `contact.html` : marque et assistance.
+- `livraison-retours.html` et les pages légales : informations client et réglementaires.
+- `merci.html` : confirmation affichée après le paiement.
+- `panier.html` et `checkout.html` : pages de transition conservées pour les anciennes URL, renvoyant vers la boutique.
 - `404.html`, `robots.txt` et `sitemap.xml` : gestion des erreurs et référencement.
 
 ## Images
 
-Les images se trouvent dans `assets/images` :
-
-- `hero-mediterranean.webp` : visuel principal.
-- `mediterranean-arch.webp` : univers de marque.
-- `product-air-luxe-cutout.webp` : COOLORA Air Luxe.
-- `product-pro-360-cutout.webp` : COOLORA Pro 360.
-- `lifestyle-beach.webp`, `lifestyle-city.webp`, `lifestyle-home.webp` : usages.
-- `coolora-logo-symbol-cutout.webp` et `favicon.svg` : identité visuelle.
-
-## Panier et commande
-
-Le panier fonctionne sans backend grâce à `localStorage`. Il conserve le modèle, la couleur, la quantité et le total pendant la navigation.
-
-Le paiement reste volontairement désactivé. Son intégration devra être réalisée avec un prestataire sécurisé avant l’ouverture des commandes payantes.
+Les images se trouvent dans `assets/images`. Les fiches utilisent les visuels produit existants et des photos lifestyle distinctes. Les emplacements de détail sont prévus dans le HTML sans image commerciale inventée.
 
 ## Déploiement GitHub Pages
 
