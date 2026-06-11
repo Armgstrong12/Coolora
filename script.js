@@ -3,6 +3,36 @@ const menuToggle = document.querySelector("[data-menu-toggle]");
 const nav = document.querySelector("[data-nav]");
 const revealItems = document.querySelectorAll(".reveal");
 const faqButtons = document.querySelectorAll(".faq-question");
+const CART_KEY = "coolora-cart-v1";
+const PRODUCT_CATALOG = {
+  "air-luxe": {
+    name: "COOLORA Air Luxe",
+    price: 80,
+    image: "assets/images/product-air-luxe-cutout.webp",
+  },
+  "pro-360": {
+    name: "COOLORA Pro 360",
+    price: 149,
+    image: "assets/images/product-pro-360-cutout.webp",
+  },
+};
+const PRODUCT_COLORS = ["Blanc", "Bleu foncé", "Noir"];
+
+const REVIEWS_KEY = "coolora-reviews-v1";
+const REVIEW_PRODUCTS = new Set(["air-luxe", "pro-360"]);
+
+const readReviews = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem(REVIEWS_KEY) || "{}");
+    return saved && typeof saved === "object" && !Array.isArray(saved) ? saved : {};
+  } catch {
+    return {};
+  }
+};
+
+const writeReviews = (reviews) => {
+  localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+};
 
 const closeMenu = () => {
   if (!menuToggle || !nav) return;
