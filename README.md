@@ -1,12 +1,8 @@
-# Coolora
+# COOLORA
 
-Site e-commerce statique premium pour Coolora, conçu en HTML, CSS et JavaScript vanilla.
+Boutique e-commerce statique premium de COOLORA, construite en HTML, CSS et JavaScript vanilla et déployable directement sur GitHub Pages.
 
-## Ouvrir le site
-
-Ouvrez `index.html` directement dans votre navigateur.
-
-Pour un aperçu avec serveur local, vous pouvez aussi lancer :
+## Lancer le site en local
 
 ```bash
 python -m http.server 4173
@@ -14,47 +10,38 @@ python -m http.server 4173
 
 Puis ouvrir `http://localhost:4173`.
 
-## Remplacer les images
+## Parcours de commande
 
-Les images sont dans `assets/images`.
+Le site utilise des **Stripe Payment Links** externes, sans clé API ni donnée bancaire dans le dépôt :
 
-Gardez les mêmes noms de fichiers si vous voulez remplacer une image sans modifier le code :
+1. accueil (`index.html`) ;
+2. catalogue (`boutique.html`) ;
+3. fiche produit ;
+4. page de paiement Stripe ;
+5. confirmation (`merci.html`).
 
-- `hero-mediterranean.webp` : fond hero avec mer et voile.
-- `mediterranean-arch.webp` : ambiance méditerranéenne.
-- `product-air-luxe-cutout.webp` : Coolora Air Luxe.
-- `product-pro-360-cutout.webp` : Coolora Pro 360.
-- `lifestyle-beach.webp`, `lifestyle-city.webp`, `lifestyle-home.webp` : cartes usages et avis.
-- `coolora-logo-symbol-cutout.webp` : symbole du logo.
+Avant la mise en ligne, remplacer les deux valeurs suivantes dans les pages concernées par les Payment Links créés dans Stripe :
 
-## Modifier les textes et prix
+- `STRIPE_LINK_AIR_LUXE` ;
+- `STRIPE_LINK_PRO_360`.
 
-Tout le contenu visible est dans `index.html`.
+Configurer ensuite l’URL de redirection après paiement vers `https://coolora-paris.fr/merci.html` dans Stripe.
 
-Les prix se trouvent dans la section `Nos produits` :
+## Pages principales
 
-- Coolora Air Luxe : `80 €`
-- Coolora Pro 360 : `149 €`
+- `index.html` : accueil et présentation de la marque.
+- `boutique.html` : catalogue et comparaison des deux modèles.
+- `product-air-luxe.html` et `product-pro-360.html` : fiches produit et accès direct au paiement.
+- `a-propos.html`, `faq.html`, `contact.html` : marque et assistance.
+- `livraison-retours.html` et les pages légales : informations client et réglementaires.
+- `merci.html` : confirmation affichée après le paiement.
+- `panier.html` et `checkout.html` : pages de transition conservées pour les anciennes URL, renvoyant vers la boutique.
+- `404.html`, `robots.txt` et `sitemap.xml` : gestion des erreurs et référencement.
 
-## Déployer
+## Images
 
-### Netlify
+Les images se trouvent dans `assets/images`. Les fiches utilisent les visuels produit existants et des photos lifestyle distinctes. Les emplacements de détail sont prévus dans le HTML sans image commerciale inventée.
 
-1. Créez un nouveau site depuis le dossier du projet.
-2. Aucun build command n’est nécessaire.
-3. Le dossier de publication est la racine du projet.
+## Déploiement GitHub Pages
 
-### Vercel
-
-1. Importez le projet.
-2. Choisissez un projet statique.
-3. Laissez la commande de build vide.
-4. Le dossier de sortie est la racine du projet.
-
-## Connecter une commande plus tard
-
-Les boutons `Commander maintenant` et `Découvrir` pointent aujourd’hui vers des sections internes.
-
-Pour connecter Stripe, PayPal, Tally ou Formspree plus tard, remplacez les liens `href` des boutons dans `index.html` par votre lien sécurisé.
-
-Pour un lien externe, gardez `target="_blank"` et `rel="noopener noreferrer"`.
+Aucune commande de build n’est nécessaire. Le site peut être publié directement depuis la racine du dépôt. Le domaine personnalisé est défini dans `CNAME`.
