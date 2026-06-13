@@ -145,12 +145,43 @@ document.addEventListener("click", (event) => {
     writeCart(cart);
     renderCart();
   }
+  const hotspot = event.target.closest("[data-hotspot]");
+  if (hotspot) {
+    const stage = hotspot.closest("[data-hotspot-stage]");
+    stage?.querySelectorAll("[data-hotspot]").forEach((item) => {
+      const active = item === hotspot;
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-expanded", String(active));
+    });
+  }
+
   const swatch = event.target.closest("[data-color-preview]");
   if (swatch) {
     document.querySelectorAll("[data-color-preview]").forEach((item) => item.classList.remove("is-selected"));
     swatch.classList.add("is-selected");
+    const color = swatch.dataset.colorPreview;
     const hidden = document.querySelector("[data-selected-color]");
-    if (hidden) hidden.value = swatch.dataset.colorPreview;
+    const colorName = document.querySelector("[data-color-name]");
+    if (hidden) hidden.value = color;
+    if (colorName) colorName.textContent = color;
+
+    document.querySelectorAll("[data-color-product]").forEach((image) => {
+      const fallback = image.dataset.defaultSrc || image.getAttribute("src");
+      const candidate = swatch.dataset.colorSrc;
+      image.classList.add("is-changing");
+      const preload = new Image();
+      preload.onload = () => {
+        image.src = candidate;
+        image.alt = `COOLORA AIR ONE en couleur ${color}`;
+        requestAnimationFrame(() => image.classList.remove("is-changing"));
+      };
+      preload.onerror = () => {
+        image.src = fallback;
+        image.dataset.colorFallback = color;
+        requestAnimationFrame(() => image.classList.remove("is-changing"));
+      };
+      preload.src = candidate;
+    });
   }
 });
 
@@ -163,11 +194,71 @@ if ("IntersectionObserver" in window) {
   revealItems.forEach((item) => observer.observe(item));
 } else revealItems.forEach((item) => item.classList.add("is-visible"));
 
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const hero = document.querySelector("[data-hero-scroll]");
 const parallax = document.querySelector("[data-parallax]");
-if (parallax && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  window.addEventListener("scroll", () => {
-    parallax.style.setProperty("--parallax-y", `${Math.min(window.scrollY * 0.055, 28)}px`);
-  }, { passive: true });
+const story = document.querySelector("[data-scroll-story]");
+const storySteps = [...document.querySelectorAll("[data-story-step]")];
+const storyCaption = document.querySelector("[data-story-caption]");
+const storyCaptions = ["Format tour de cou", "Double diffusion gauche / droite", "Seulement 250 g", "3 niveaux de puissance"];
+let scrollTicking = false;
+
+const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+const updateScrollExperience = () => {
+  scrollTicking = false;
+  if (reducedMotion) return;
+
+  if (hero) {
+    const rect = hero.getBoundingClientRect();
+    const progress = clamp(-rect.top / Math.max(rect.height * 0.72, 1));
+    hero.style.setProperty("--hero-progress", progress.toFixed(3));
+    if (parallax) parallax.style.setProperty("--parallax-y", `${progress * 42}px`);
+  }
+
+  if (story && storySteps.length) {
+    const rect = story.getBoundingClientRect();
+    const travel = Math.max(story.offsetHeight - window.innerHeight, 1);
+    const progress = clamp(-rect.top / travel);
+    const activeIndex = Math.min(storySteps.length - 1, Math.floor(progress * storySteps.length));
+    story.style.setProperty("--story-progress", progress.toFixed(3));
+    story.style.setProperty("--story-index", activeIndex);
+    storySteps.forEach((step, index) => {
+      const active = index === activeIndex;
+      step.classList.toggle("is-active", active);
+      step.setAttribute("aria-hidden", String(!active));
+    });
+    if (storyCaption) storyCaption.textContent = storyCaptions[activeIndex];
+  }
+};
+
+const requestScrollUpdate = () => {
+  if (scrollTicking) return;
+  scrollTicking = true;
+  requestAnimationFrame(updateScrollExperience);
+};
+
+if (!reducedMotion) {
+  window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+  window.addEventListener("resize", requestScrollUpdate);
+  requestScrollUpdate();
+}
+
+const staggerGroups = document.querySelectorAll("[data-stagger-group]");
+if ("IntersectionObserver" in window && !reducedMotion) {
+  const staggerObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.querySelectorAll("[data-stagger-item]").forEach((item, index) => {
+        item.style.setProperty("--stagger-delay", `${index * 130}ms`);
+        item.classList.add("is-stagger-visible");
+      });
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.18 });
+  staggerGroups.forEach((group) => staggerObserver.observe(group));
+} else {
+  staggerGroups.forEach((group) => group.querySelectorAll("[data-stagger-item]").forEach((item) => item.classList.add("is-stagger-visible")));
 }
 
 updateCartCount();
